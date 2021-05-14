@@ -13,13 +13,14 @@ class BaseView(View):
             'data': data,
             'message':message,
         }
-
-        return JsonResponse(results, status)
+        # print(results, status)
+        # status가 문제
+        return JsonResponse(results, status=status)
 
 
 
 class UserCreateView(BaseView):
-    method_decorator(csrf_exempt)
+    @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kargs):
         return super(UserCreateView, self).dispatch(request, *args, **kargs)
 
@@ -47,25 +48,30 @@ class UserCreateView(BaseView):
         return self.response({"user.id": user})
 
 class UserLoginView(BaseView):
-    # method_decorator(csrf_exempt)
-    # def dispatch(self, request, *args, **kargs):
-    #     return super(UserLoginView, self).dispatch(request, *args, **kargs)
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kargs):
+        return super(UserLoginView, self).dispatch(request, *args, **kargs)
 
     def post(self, request):
-        print("ffs")
+  
         username = request.POST.get('username', '')
+     
         if username is None:
+       
             return self.response(message="아이디를 입력해주세요", status=400)
 
         password = request.POST.get('password', '')
         if password is None:
             return self.response(message="비밀번호를 입력해주세요", status=400)
-
+        print(username, password)
         user = authenticate(username=username, password=password)
-        if user is None:
-            return self.response(message="입력 정보를 확인해주세요", status=400)
-        login(request, user)
 
+        if user is None:
+            print("정보 없음")
+            return self.response(message="입력 정보를 확인해주세요", status=400)
+            # return JsonResponse({'data':{}, 'message': "입력정보를 확인해주세요"}, status=400)
+        login(request, user)
+        print(4)
         return self.response()        
 class UserLogoutView(BaseView):
     def get(self, request):
