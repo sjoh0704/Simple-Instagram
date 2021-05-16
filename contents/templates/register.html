@@ -1,0 +1,55 @@
+{%extends 'base.html'%}
+{%block header%}
+<script
+src="https://code.jquery.com/jquery-3.4.1.min.js">
+</script>
+{%endblock%}
+
+{%block contents%}
+<br>
+<h1 class="text-info">Register</h1>
+<div class="row">
+    <div class="col-md-6">
+        <br>
+        <div class="form-group">
+            <label for="username">사용자명</label>
+            <input type="text" id="username" class="form-control">
+        <br>
+        <br>
+        <div class="form-group">
+            <label for="email">email</label>
+            <input type="text" id="email" class="form-control">
+        <br>
+        </div>
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="text" id="password" class="form-control">
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="password-check">비밀번호 확인</label>
+            <input type="text" id="password-check" class="form-control">
+        </div>
+        
+
+        <button type="submit" id ="register" class="btn btn-info btn-sm">register</button>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function(){
+        $("#register").click(function(){
+            $.post('/apis/v1/users/create', {'username': $(username).val(), 'password': $(password).val(), 'email': $(email).val()}, function(){
+     
+                location.reload();
+                           alert("회원가입이 되었습니다!");
+                
+            }).fail(function(data){
+            alert(data.responseJSON.message);
+        });
+    });
+    });
+</script>
+
+{%endblock%}

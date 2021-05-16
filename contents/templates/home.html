@@ -14,26 +14,19 @@ src="https://code.jquery.com/jquery-3.4.1.min.js">
 
 {{request.user}}
 
-<input type="text" id="username">
-<input type="text" id="password">
-<button id="login">login</button>
-<button id="logout">logout</button>
+
+<div class="row">
+    <div class="col-12">
+        {% comment %} {%if request.user == "AnonymousUser" %} {% endcomment %}
+        <button class="btn btn-info"><a href="{% url 'login'%}">로그인 하러가기</a></button>
+        <button class="btn btn-info"><a href="{% url 'register'%}">회원가입 하러가기</a></button>
+        {% comment %} {%endif%} {% endcomment %}
+        <button class="btn btn-info" id="logout">로그아웃</button>
+        
+    </div>
+</div>
 
 
-
-<script>
-    $(document).ready(function(){
-        $("#login").click(function(){
-            $.post('apis/v1/users/login', {'username': $(username).val(), 'password': $(password).val()}, function(){
-                location.reload();
-            }).fail(function(data){
-            // alert(data);
-            alert(data.responseJSON.message);
-
-        });
-    });
-    });
-</script>
 <script>
     $(document).ready(function(){
         $("#logout").click(function(){

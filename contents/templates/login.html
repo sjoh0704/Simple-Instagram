@@ -22,7 +22,13 @@ src="https://code.jquery.com/jquery-3.4.1.min.js">
         </div>
         
 
-        <button type="submit" id ="login" class="btn btn-info btn-sm">login</button>
+        <button type="submit" id ="login" class="btn btn-info btn-md">login</button>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <a href="{% url 'register'%}" class="btn btn-info btn-md">register</a>
     </div>
 </div>
 
@@ -30,8 +36,11 @@ src="https://code.jquery.com/jquery-3.4.1.min.js">
 <script>
     $(document).ready(function(){
         $("#login").click(function(){
-            $.post('apis/v1/users/login', {'username': $(username).val(), 'password': $(password).val()}, function(){
-                location.reload();
+            $.post('/apis/v1/users/login', {'username': $(username).val(), 'password': $(password).val()}, function(){
+                alert("로그인 성공")
+                // location.reload();
+                $(location).attr('href', "");
+                
             }).fail(function(data){
             alert(data.responseJSON.message);
         });

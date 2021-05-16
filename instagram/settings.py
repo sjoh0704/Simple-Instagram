@@ -90,7 +90,7 @@ DATABASES = {
         'PASSWORD': 'dhtmd745',
         'HOST': 'instagram-database.ctxil1e8ebkk.ap-northeast-2.rds.amazonaws.com',
         'PORT': '3306',
-
+        
     }
 }
 
